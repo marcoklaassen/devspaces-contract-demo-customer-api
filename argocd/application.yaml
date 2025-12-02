@@ -2,13 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: customer-api
-  namespace: argocd
+  namespace: customer-api
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_USERNAME/YOUR_REPO.git  # Update with your repository URL
+    repoURL: https://github.com/marcoklaassen/devspaces-contract-demo-customer-api.git
     targetRevision: main
     path: helm/customer-api
     helm:
@@ -42,7 +42,7 @@ spec:
             size: 1Gi
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: customer-api
   syncPolicy:
     automated:
       prune: true
