@@ -83,11 +83,3 @@ postgresql:
     requests:
       cpu: 100m
       memory: 256Mi
-  # OpenShift security context
-  securityContext:
-    runAsUser: 26
-    runAsNonRoot: true
-    fsGroup: 26
-    seccompProfile:
-      type: RuntimeDefault
-
