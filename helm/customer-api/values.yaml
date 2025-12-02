@@ -1,0 +1,83 @@
+replicaCount: 1
+
+image:
+  repository: quay.io/mklaasse/quarkus-customer-api
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+route:
+  enabled: true
+  host: ""
+  annotations: {}
+  # tls:
+  #   termination: edge
+  #   insecureEdgeTerminationPolicy: Redirect
+  #   certificate: ""
+  #   key: ""
+  #   caCertificate: ""
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+postgresql:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "15"
+    pullPolicy: IfNotPresent
+  database: customerdb
+  username: postgres
+  # password: ""  # Leave empty to auto-generate. If set, this password will be used.
+  #              # On first deployment, a random 32-character password is generated.
+  #              # On upgrades, the existing password is automatically reused.
+  persistence:
+    enabled: true
+    size: 1Gi
+    accessMode: ReadWriteOnce
+    storageClass: ""
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
