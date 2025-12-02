@@ -67,7 +67,7 @@ postgresql:
     tag: "latest"
     pullPolicy: IfNotPresent
   database: customerdb
-  username: postgres
+  username: customer
   # password: ""  # Leave empty to auto-generate. If set, this password will be used.
   #              # On first deployment, a random 32-character password is generated.
   #              # On upgrades, the existing password is automatically reused.

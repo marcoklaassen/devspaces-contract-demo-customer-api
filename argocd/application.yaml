@@ -33,7 +33,7 @@ spec:
         postgresql:
           enabled: true
           database: customerdb
-          username: postgres
+          username: customer
           # password: ""  # Leave empty to auto-generate at deployment time
           persistence:
             enabled: true
