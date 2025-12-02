@@ -40,7 +40,7 @@ jobs:
 
       - name: Build native executable
         run: |
-          ./mvnw package -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-binary-s2i:2.0-java21
+          ./mvnw package -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi10-quarkus-mandrel-builder-image:jdk-21
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
