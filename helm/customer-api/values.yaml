@@ -60,8 +60,11 @@ affinity: {}
 postgresql:
   enabled: true
   image:
-    repository: postgres
-    tag: "15"
+    # Red Hat supported PostgreSQL image for OpenShift
+    # Note: registry.redhat.io may require authentication. On OpenShift, this is typically
+    # configured at the cluster level. If needed, add imagePullSecrets to the values.
+    repository: registry.redhat.io/rhel8/postgresql-15
+    tag: "latest"
     pullPolicy: IfNotPresent
   database: customerdb
   username: postgres
@@ -80,4 +83,11 @@ postgresql:
     requests:
       cpu: 100m
       memory: 256Mi
+  # OpenShift security context
+  securityContext:
+    runAsUser: 26
+    runAsNonRoot: true
+    fsGroup: 26
+    seccompProfile:
+      type: RuntimeDefault
 

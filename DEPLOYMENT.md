@@ -147,18 +147,50 @@ postgresql:
 
 ### PostgreSQL Configuration
 
+The Helm chart uses **Red Hat's certified PostgreSQL image** (`registry.redhat.io/rhel8/postgresql-15`) which is designed to work with OpenShift's security constraints:
+
+- **OpenShift-compatible**: Runs as non-root user (UID 26) with proper security contexts
+- **Red Hat supported**: Certified and supported by Red Hat for use on OpenShift
+- **Security hardened**: Includes proper SELinux contexts and security policies
+
 The default configuration includes:
 
 ```yaml
 postgresql:
   enabled: true
+  image:
+    repository: registry.redhat.io/rhel8/postgresql-15
+    tag: "latest"
   database: customerdb
   username: postgres
   # password: ""  # Auto-generated if not specified
+  securityContext:
+    runAsUser: 26
+    runAsNonRoot: true
+    fsGroup: 26
   persistence:
     enabled: true
     size: 1Gi
 ```
+
+#### Image Pull Authentication
+
+The `registry.redhat.io` registry may require authentication. On OpenShift, this is typically configured at the cluster level through global pull secrets. If your cluster doesn't have this configured, you can:
+
+1. Create a pull secret for `registry.redhat.io`:
+   ```bash
+   oc create secret docker-registry redhat-registry-secret \
+     --docker-server=registry.redhat.io \
+     --docker-username=<your-redhat-username> \
+     --docker-password=<your-redhat-password> \
+     --docker-email=<your-email>
+   ```
+
+2. Add the secret to your Helm values:
+   ```yaml
+   imagePullSecrets:
+     - name: redhat-registry-secret
+   ```
 
 The Quarkus application automatically connects to the PostgreSQL service using the generated credentials stored in the Kubernetes secret.
 
