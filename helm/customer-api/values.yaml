@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: quay.io/mklaasse/quarkus-customer-api
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: "latest"
 
 imagePullSecrets: []
