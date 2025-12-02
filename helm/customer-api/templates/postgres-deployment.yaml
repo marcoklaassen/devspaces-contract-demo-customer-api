@@ -52,6 +52,7 @@ spec:
           env:
             - name: POSTGRESQL_DATABASE
               value: {{ .Values.postgresql.database }}
+            {{- if ne .Values.postgresql.username "postgres" }}
             - name: POSTGRESQL_USER
               value: {{ .Values.postgresql.username }}
             - name: POSTGRESQL_PASSWORD
@@ -59,6 +60,13 @@ spec:
                 secretKeyRef:
                   name: {{ include "customer-api.fullname" . }}-postgresql
                   key: postgres-password
+            {{- else }}
+            - name: POSTGRESQL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "customer-api.fullname" . }}-postgresql
+                  key: postgres-password
+            {{- end }}
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
