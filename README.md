@@ -11,6 +11,7 @@ This API provides endpoints to retrieve customer information from a PostgreSQL d
 - Retrieve all customers
 - Get a customer by ID
 - Search customers by name
+- Create new customers
 - RESTful JSON API
 - PostgreSQL database integration
 
@@ -88,6 +89,35 @@ GET /customer/name?name=Marco
 ]
 ```
 
+### Create Customer
+Creates a new customer.
+
+**Request:**
+```http
+POST /customer
+Content-Type: application/json
+```
+
+**Example:**
+```http
+POST /customer
+Content-Type: application/json
+
+{
+  "name": "Jane Doe"
+}
+```
+
+**Response:**
+```json
+{
+  "id": 3,
+  "name": "Jane Doe"
+}
+```
+
+**Status Code:** `201 Created`
+
 ## Running Locally
 
 ### 1. Database Setup
@@ -157,6 +187,11 @@ curl http://localhost:8080/customer/1
 
 # Search customers by name
 curl http://localhost:8080/customer/name?name=Marco
+
+# Create a new customer
+curl -X POST http://localhost:8080/customer \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Jane Doe"}'
 ```
 
 Or use any HTTP client like Postman, Insomnia, or your browser.
